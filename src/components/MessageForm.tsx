@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { Button } from './ui/button';
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 interface MessageFormProps {
   onMessageSent: () => void;
+  onError: () => void; // onError props を追加
   receiverId: number | null | undefined;
 }
 
@@ -11,7 +14,15 @@ interface ErrorResponse {
   errors: string[];
 }
 
-export default function MessageForm({ onMessageSent, receiverId }: MessageFormProps) {
+const getApiUrl = (): string => {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  if (!apiUrl) {
+    throw new Error('API URLが設定されていません。');
+  }
+  return apiUrl;
+};
+
+export default function MessageForm({ onMessageSent, onError, receiverId }: MessageFormProps) {
   const [content, setContent] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -37,10 +48,7 @@ export default function MessageForm({ onMessageSent, receiverId }: MessageFormPr
         return;
       }
 
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-      if (!apiUrl) {
-        throw new Error('API URLが設定されていません。');
-      }
+      const apiUrl = getApiUrl();
 
       await axios.post(
         `${apiUrl}/messages`,
@@ -56,6 +64,12 @@ export default function MessageForm({ onMessageSent, receiverId }: MessageFormPr
       );
       setContent('');
       onMessageSent();
+      Swal.fire({
+        icon: 'success',
+        title: 'メッセージを送信しました。',
+        showConfirmButton: false,
+        timer: 1500,
+      });
     } catch (err) {
       if (axios.isAxiosError(err)) {
         const axiosError = err as AxiosError<ErrorResponse>;
@@ -67,6 +81,12 @@ export default function MessageForm({ onMessageSent, receiverId }: MessageFormPr
       } else {
         setError('メッセージの送信中に予期しないエラーが発生しました。');
       }
+      Swal.fire({
+        icon: 'error',
+        title: 'メッセージの送信に失敗しました。',
+        text: 'メッセージの送信中にエラーが発生しました。',
+      });
+      onError(); // onError コールバックを呼び出し
     } finally {
       setIsLoading(false);
     }
