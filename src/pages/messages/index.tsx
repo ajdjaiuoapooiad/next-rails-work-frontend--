@@ -4,6 +4,8 @@ import MessageForm from '../../components/MessageForm';
 import Head from 'next/head';
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
+import { useRouter } from 'next/navigation';
+
 
 interface User {
   id: number;
@@ -49,6 +51,7 @@ export default function Messages() {
   const [currentUser, setCurrentUser] = useState<{ id: number | null }>({ id: null });
   const [users, setUsers] = useState<{ [key: number]: User }>({});
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const router = useRouter(); // useRouterを初期化
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -133,6 +136,10 @@ export default function Messages() {
     }
   }, [groupedMessages[selectedConversation || '']]);
 
+  const handleUserIconClick = (userId: number) => {
+    router.push(`/users/${userId}/profile`);
+  };
+
   if (loading) return <p>ロード中...</p>;
   if (error) return <p>エラー: {error}</p>;
 
@@ -166,6 +173,7 @@ export default function Messages() {
                       onError={(e) => {
                         (e.target as HTMLImageElement).src = DEFAULT_ICON;
                       }}
+                      onClick={() => handleUserIconClick(otherUserId)} // クリックイベントハンドラを追加
                     />
                   </div>
                   <div>
@@ -197,6 +205,7 @@ export default function Messages() {
                             onError={(e) => {
                               (e.target as HTMLImageElement).src = DEFAULT_ICON;
                             }}
+                            onClick={() => handleUserIconClick(message.senderId)} // クリックイベントハンドラを追加
                           />
                         </div>
                         <div className={`p-4 rounded-lg bg-gray-50 max-w-2/3`}>
