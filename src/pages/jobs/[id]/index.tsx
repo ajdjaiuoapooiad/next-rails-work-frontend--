@@ -138,7 +138,7 @@ export default function JobDetail() {
         </div>
         <div className="flex justify-center mb-8">
           <img
-            src={job.image_url || 'https://images.wantedly.com/i/jtLvrG6?w=800&format=jpeg'}
+            src={job.image_url || 'https://images.wantedly.com/i/jtLvrG6?w=800&format=jpeg'} // デフォルトの求人画像を表示
             alt="Job Image"
             className="rounded-md w-full object-cover"
             style={{ height: '300px' }}
@@ -146,7 +146,7 @@ export default function JobDetail() {
         </div>
         <div className="flex items-center mb-4">
           <img
-            src={job.user_icon_url}
+            src={job.user_icon_url || 'https://kotonohaworks.com/free-icons/wp-content/uploads/kkrn_icon_user_1.png'} // デフォルトのユーザーアイコンを表示
             alt={`${job.user_name}のアイコン`}
             className="w-8 h-8 rounded-full mr-2"
           />

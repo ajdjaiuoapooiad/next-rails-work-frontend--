@@ -32,6 +32,14 @@ export default function JobCreate() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // 必須フィールドの検証
+    for (const field of requiredFields) {
+      if (!getFieldValue(field)) {
+        setError(`${field}は必須項目です。`);
+        return;
+      }
+    }
+
     try {
       const token = localStorage.getItem('authToken');
       const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -39,26 +47,21 @@ export default function JobCreate() {
         throw new Error('API URLが設定されていません。');
       }
 
-      const formData = new FormData();
-      formData.append('title', title);
-      formData.append('description', description);
-      formData.append('location', location);
-      if (salary) {
-        formData.append('salary', salary);
-      }
-      formData.append('requirements', requirements);
-      formData.append('benefits', benefits);
-      formData.append('employment_type', employmentType);
-      if (image) {
-        formData.append('image', image);
-      }
-
       const response = await fetch(`${apiUrl}/jobs`, {
         method: 'POST',
         headers: {
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: formData,
+        body: JSON.stringify({
+          title,
+          description,
+          location,
+          salary,
+          requirements,
+          benefits,
+          employment_type: employmentType,
+        }),
       });
 
       if (!response.ok) {
@@ -81,6 +84,22 @@ export default function JobCreate() {
         text: err.message || '求人情報の作成中にエラーが発生しました',
       });
       setError(err.message || '求人情報の作成中にエラーが発生しました');
+    }
+  };
+
+  // フィールドの値を取得するヘルパー関数
+  const getFieldValue = (field: string): string => {
+    switch (field) {
+      case 'タイトル':
+        return title;
+      case '説明':
+        return description;
+      case '場所':
+        return location;
+      case '雇用形態':
+        return employmentType;
+      default:
+        return '';
     }
   };
 
