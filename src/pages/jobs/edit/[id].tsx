@@ -27,7 +27,6 @@ export default function JobEdit() {
   const [employmentType, setEmploymentType] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [image, setImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   const prefectures = [
@@ -84,7 +83,6 @@ export default function JobEdit() {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setImage(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreviewImage(reader.result as string);
@@ -103,22 +101,21 @@ export default function JobEdit() {
       if (!apiUrl) {
         throw new Error('API URLが設定されていません。');
       }
+      const formData = new FormData();
+      formData.append('title', title);
+      formData.append('description', description);
+      formData.append('location', location);
+      formData.append('salary', salary !== null ? salary.toString() : '');
+      formData.append('requirements', requirements);
+      formData.append('benefits', benefits);
+      formData.append('employment_type', employmentType);
 
       const response = await fetch(`${apiUrl}/jobs/${id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json', // JSON形式で送信
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ // 画像以外のデータを送信
-          title,
-          description,
-          location,
-          salary,
-          requirements,
-          benefits,
-          employment_type: employmentType,
-        }),
+        body: formData,
       });
 
       if (!response.ok) {
@@ -158,7 +155,87 @@ export default function JobEdit() {
           <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">求人編集</h1>
           {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* ... 他のフォーム要素 ... */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">タイトル<span className="text-red-500">*</span></label>
+                <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">場所<span className="text-red-500">*</span></label>
+                <select
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  required
+                >
+                  <option value="">都道府県を選択してください</option>
+                  {prefectures.map((pref) => (
+                    <option key={pref} value={pref}>
+                      {pref}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">給与</label>
+                <input
+                  type="number"
+                  value={salary !== null ? salary.toString() : ''}
+                  onChange={(e) => setSalary(e.target.value ? parseInt(e.target.value) : null)}
+                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">雇用形態<span className="text-red-500">*</span></label>
+                <select
+                  value={employmentType}
+                  onChange={(e) => setEmploymentType(e.target.value)}
+                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  required
+                >
+                  <option value="">雇用形態を選択してください</option>
+                  {employmentTypes.map((type) => (
+                    <option key={type} value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">説明<span className="text-red-500">*</span></label>
+              <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                rows={8}
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">応募要件</label>
+              <textarea
+                value={requirements}
+                onChange={(e) => setRequirements(e.target.value)}
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                rows={5}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">福利厚生</label>
+              <textarea
+                value={benefits}
+                onChange={(e) => setBenefits(e.target.value)}
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                rows={5}
+              />
+            </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">画像</label>
               <input

@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import axios, { AxiosError } from 'axios';
 import MessageForm from '../../components/MessageForm';
-import { Message } from '@/utils/types';
 import Head from 'next/head';
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
@@ -186,30 +185,33 @@ export default function Messages() {
             <div className="space-y-4">
               {formatMessagesForConversation(groupedMessages[selectedConversation]).map((message) => (
                 <div key={message.createdAt} className={`flex ${message.isCurrentUser ? 'justify-end' : 'justify-start'} items-start`}>
-                  {!message.isCurrentUser && (
-                    <div className="flex items-start">
-                      <div className="flex-shrink-0 h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden mr-2">
-                        <img
-                          src={message.senderIcon || DEFAULT_ICON}
-                          alt={`${message.senderName}のアイコン`}
-                          className="h-full w-full object-cover"
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).src = DEFAULT_ICON;
-                          }}
-                        />
+                  <div className="flex flex-col">
+                    <p className="text-xs text-gray-500 mb-1">{message.senderName}</p>
+                    {!message.isCurrentUser && (
+                      <div className="flex items-start">
+                        <div className="flex-shrink-0 h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden mr-2">
+                          <img
+                            src={message.senderIcon || DEFAULT_ICON}
+                            alt={`${message.senderName}のアイコン`}
+                            className="h-full w-full object-cover"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = DEFAULT_ICON;
+                            }}
+                          />
+                        </div>
+                        <div className={`p-4 rounded-lg bg-gray-50 max-w-2/3`}>
+                          <p className="text-base leading-relaxed">{message.content}</p>
+                          <p className="text-xs text-gray-400">{new Date(message.createdAt).toLocaleString()}</p>
+                        </div>
                       </div>
-                      <div className={`p-4 rounded-lg bg-gray-50 max-w-2/3`}>
+                    )}
+                    {message.isCurrentUser && (
+                      <div className={`p-4 rounded-lg bg-blue-100 max-w-2/3`}>
                         <p className="text-base leading-relaxed">{message.content}</p>
                         <p className="text-xs text-gray-400">{new Date(message.createdAt).toLocaleString()}</p>
                       </div>
-                    </div>
-                  )}
-                  {message.isCurrentUser && (
-                    <div className={`p-4 rounded-lg bg-blue-100 max-w-2/3`}>
-                      <p className="text-base leading-relaxed">{message.content}</p>
-                      <p className="text-xs text-gray-400">{new Date(message.createdAt).toLocaleString()}</p>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               ))}
               <div ref={messagesEndRef} />
