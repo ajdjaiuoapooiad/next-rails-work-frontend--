@@ -41,7 +41,9 @@ const CompanyJobs = () => {
           throw new Error('API URLが設定されていません。');
         }
         const response = await axios.get(`${apiUrl}/jobs?company_id=${userId}`);
-        setJobs(response.data);
+        // フィルタリング処理を追加
+        const filteredJobs = response.data.filter((job: Job) => job.company_id === userId);
+        setJobs(filteredJobs);
       } catch (err: any) {
         setError(err.message || '求人情報の取得に失敗しました');
       } finally {
@@ -68,7 +70,6 @@ const CompanyJobs = () => {
         },
       });
       setJobs(jobs.filter((job) => job.id !== jobId));
-      // sweetalert2で成功メッセージを表示
       Swal.fire({
         icon: 'success',
         title: '求人を削除しました。',
@@ -77,7 +78,6 @@ const CompanyJobs = () => {
       });
     } catch (err: any) {
       setError(err.message || '求人情報の削除に失敗しました');
-      // sweetalert2でエラーメッセージを表示
       Swal.fire({
         icon: 'error',
         title: '求人削除中にエラーが発生しました。',
