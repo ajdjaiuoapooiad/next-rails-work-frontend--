@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios, { AxiosError } from 'axios';
 import { Button } from './ui/button';
 import Swal from 'sweetalert2';
@@ -6,7 +6,7 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 
 interface MessageFormProps {
   onMessageSent: () => void;
-  onError: () => void; // onError props を追加
+  onError: () => void;
   receiverId: number | null | undefined;
 }
 
@@ -22,15 +22,27 @@ const getApiUrl = (): string => {
   return apiUrl;
 };
 
-export default function MessageForm({ onMessageSent, onError, receiverId }: MessageFormProps) {
+const MessageForm: React.FC<MessageFormProps> = ({ onMessageSent, onError, receiverId }) => {
   const [content, setContent] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [currentUserId, setCurrentUserId] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const userId = localStorage.getItem('userId');
+      setCurrentUserId(userId ? parseInt(userId) : null);
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!receiverId) {
-      setError('送信相手を選択してください。');
+      setError('自分にはメッセージを送信できません。');
+      return;
+    }
+    if (receiverId === currentUserId) {
+      setError('自分にはメッセージを送信できません。');
       return;
     }
     if (!content.trim()) {
@@ -86,7 +98,7 @@ export default function MessageForm({ onMessageSent, onError, receiverId }: Mess
         title: 'メッセージの送信に失敗しました。',
         text: 'メッセージの送信中にエラーが発生しました。',
       });
-      onError(); // onError コールバックを呼び出し
+      onError();
     } finally {
       setIsLoading(false);
     }
@@ -108,4 +120,6 @@ export default function MessageForm({ onMessageSent, onError, receiverId }: Mess
       </Button>
     </form>
   );
-}
+};
+
+export default MessageForm;
