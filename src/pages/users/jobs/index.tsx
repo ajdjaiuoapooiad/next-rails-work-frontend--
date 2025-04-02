@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import Link from 'next/link';
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 interface Job {
   id: number;
@@ -56,12 +58,31 @@ const CompanyJobs = () => {
       if (!apiUrl) {
         throw new Error('API URLが設定されていません。');
       }
-      await axios.delete(`${apiUrl}/jobs/${jobId}`);
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        throw new Error('認証トークンがありません。');
+      }
+      await axios.delete(`${apiUrl}/jobs/${jobId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setJobs(jobs.filter((job) => job.id !== jobId));
-      alert('求人を削除しました。');
+      // sweetalert2で成功メッセージを表示
+      Swal.fire({
+        icon: 'success',
+        title: '求人を削除しました。',
+        showConfirmButton: false,
+        timer: 1500,
+      });
     } catch (err: any) {
       setError(err.message || '求人情報の削除に失敗しました');
-      alert('求人削除中にエラーが発生しました。');
+      // sweetalert2でエラーメッセージを表示
+      Swal.fire({
+        icon: 'error',
+        title: '求人削除中にエラーが発生しました。',
+        text: err.message || '求人情報の削除に失敗しました',
+      });
     }
   };
 
