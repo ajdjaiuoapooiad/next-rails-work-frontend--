@@ -124,13 +124,14 @@ export default function Jobs() {
           <p className="text-sm text-gray-600 mb-4">{filteredJobs.length}件の求人</p>
           {filteredJobs.map((job) => {
             const defaultUserIcon = 'https://kotonohaworks.com/free-icons/wp-content/uploads/kkrn_icon_user_1.png';
+            const defaultJobImage = 'https://images.wantedly.com/i/fzq897n?w=1960&format=jpeg';
 
             return (
               <div key={job.id} className="bg-white rounded-lg shadow-md p-4 mb-4">
                 <Link href={`/jobs/${job.id}`}>
                   <div>
                     <img
-                      src={job.image_url || 'https://images.wantedly.com/i/fzq897n?w=1960&format=jpeg'}
+                      src={job.image_url || defaultJobImage} // デフォルトの求人画像を表示
                       alt={job.title}
                       className="w-full h-[250px] object-cover rounded-md mb-2"
                     />
@@ -146,7 +147,7 @@ export default function Jobs() {
                     </div>
                     <div className="flex items-center mt-2">
                       <img
-                        src={job.user_icon_url || defaultUserIcon}
+                        src={job.user_icon_url || defaultUserIcon} // デフォルトのユーザーアイコンを表示
                         alt={job.user_name}
                         className="w-8 h-8 rounded-full mr-2"
                       />
