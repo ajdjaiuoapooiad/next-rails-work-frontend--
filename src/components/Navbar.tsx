@@ -394,6 +394,23 @@ const Navbar = () => {
                 </button>
               </>
             )}
+            {!isLoggedIn && (
+              <>
+                <Link
+                  href="/users/login"
+                  className="text-indigo-600 hover:bg-gray-100 p-2 rounded-md transition-colors duration-300 w-full text-center"
+                >
+                  ログイン
+                </Link>
+                <Link
+                  href="/users/register"
+                  className="text-indigo-600 hover:bg-gray-100 p-2 rounded-md transition-colors duration-300 w-full text-center"
+                >
+                  新規登録
+                </Link>
+              </>
+            )}
+            
           </div>
         </div>
       )}
