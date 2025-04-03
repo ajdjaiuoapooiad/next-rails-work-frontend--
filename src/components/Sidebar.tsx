@@ -43,6 +43,17 @@ const Sidebar: React.FC<SidebarProps> = ({
     }
   };
 
+  const features = [
+    '学生さん歓迎',
+    '昼食おごります',
+    '服装自由',
+    'リモートワーク可',
+    'フレックスタイム制',
+    '未経験歓迎',
+    '第二新卒歓迎',
+    '土日祝休み',
+  ];
+
   return (
     <aside className="col-span-1">
       <div className="mb-4">
@@ -136,33 +147,17 @@ const Sidebar: React.FC<SidebarProps> = ({
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">特徴</label>
         <div className="flex flex-col">
-          <label className="inline-flex items-center">
-            <input
-              type="checkbox"
-              className="form-checkbox"
-              checked={selectedFeatures.includes('学生さん歓迎')}
-              onChange={() => handleFeatureChange('学生さん歓迎')}
-            />
-            <span className="ml-2">学生さん歓迎</span>
-          </label>
-          <label className="inline-flex items-center">
-            <input
-              type="checkbox"
-              className="form-checkbox"
-              checked={selectedFeatures.includes('昼食おごります')}
-              onChange={() => handleFeatureChange('昼食おごります')}
-            />
-            <span className="ml-2">昼食おごります</span>
-          </label>
-          <label className="inline-flex items-center">
-            <input
-              type="checkbox"
-              className="form-checkbox"
-              checked={selectedFeatures.includes('服装自由')}
-              onChange={() => handleFeatureChange('服装自由')}
-            />
-            <span className="ml-2">服装自由</span>
-          </label>
+          {features.map((feature) => (
+            <label key={feature} className="inline-flex items-center">
+              <input
+                type="checkbox"
+                className="form-checkbox"
+                checked={selectedFeatures.includes(feature)}
+                onChange={() => handleFeatureChange(feature)}
+              />
+              <span className="ml-2">{feature}</span>
+            </label>
+          ))}
         </div>
       </div>
     </aside>
