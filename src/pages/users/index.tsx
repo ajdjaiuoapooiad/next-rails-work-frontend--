@@ -5,7 +5,7 @@ interface User {
   id: number;
   name: string;
   email: string;
-  user_type: number;
+  user_type: string; // user_type を string 型に変更
   icon?: string;
 }
 
@@ -85,7 +85,8 @@ export default function UserList() {
                 <strong>メールアドレス:</strong> {user.email}
               </div>
               <div>
-                <strong>ユーザータイプ:</strong> {user.user_type === 0 ? '学生' : '企業'}
+                {/* ユーザータイプの表示を修正 */}
+                <strong>ユーザータイプ:</strong> {user.user_type === 'student' ? '学生' : user.user_type === 'company' ? '企業' : '不明'}
               </div>
             </div>
           </li>
