@@ -65,7 +65,9 @@ export default function UserProfile() {
 
         const userData = await apiRequest(`${apiUrl}/users/show_by_id/${id}`);
         setUsername(userData.name);
-        setCurrentUserId(userData.id);
+        // localStorage から userId を取得 (変更箇所)
+        const userIdFromStorage = localStorage.getItem('userId');
+        setCurrentUserId(userIdFromStorage ? parseInt(userIdFromStorage) : null);
       } catch (err: any) {
         setError(err.message);
       } finally {
@@ -179,6 +181,7 @@ export default function UserProfile() {
     return <p className="text-center mt-8 text-red-500">エラー: {error}</p>;
   }
 
+  // localStorage から取得した userId と表示されているプロフィールの userId を比較 (変更箇所)
   const showEditButton = currentUserId && currentUserId === parseInt(id as string);
 
   return (
