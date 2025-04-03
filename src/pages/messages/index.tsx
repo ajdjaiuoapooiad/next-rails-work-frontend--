@@ -225,7 +225,36 @@ export default function Messages() {
               ))}
               <div ref={messagesEndRef} />
             </div>
-            {groupedMessages[selectedConversation].find(message => message.sender_id !== currentUser.id)?.sender_id !== currentUser.id && (
+             {/* 修正箇所 */}
+             {groupedMessages[selectedConversation]?.length > 0 ? (
+              groupedMessages[selectedConversation].find(
+                (message) => message.sender_id !== currentUser.id
+              )?.sender_id !== currentUser.id && (
+                <MessageForm
+                  onMessageSent={() => {
+                    setRefresh(true);
+                    Swal.fire({
+                      icon: 'success',
+                      title: 'メッセージを送信しました。',
+                      showConfirmButton: false,
+                      timer: 1500,
+                    });
+                  }}
+                  onError={() => {
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'メッセージの送信に失敗しました。',
+                      text: 'メッセージの送信中にエラーが発生しました。',
+                    });
+                  }}
+                  receiverId={
+                    groupedMessages[selectedConversation].find(
+                      (message) => message.sender_id !== currentUser.id
+                    )?.sender_id
+                  }
+                />
+              )
+            ) : (
               <MessageForm
                 onMessageSent={() => {
                   setRefresh(true);
@@ -243,7 +272,29 @@ export default function Messages() {
                     text: 'メッセージの送信中にエラーが発生しました。',
                   });
                 }}
-                receiverId={groupedMessages[selectedConversation].find(message => message.sender_id !== currentUser.id)?.sender_id}
+                receiverId={
+                  messages.find(
+                    (message) =>
+                      message.sender_id ===
+                        parseInt(selectedConversation.split('-')[0]) ||
+                      message.sender_id ===
+                        parseInt(selectedConversation.split('-')[1])
+                  )?.sender_id === currentUser.id
+                    ? messages.find(
+                        (message) =>
+                          message.sender_id ===
+                            parseInt(selectedConversation.split('-')[0]) ||
+                          message.sender_id ===
+                            parseInt(selectedConversation.split('-')[1])
+                      )?.receiver_id
+                    : messages.find(
+                        (message) =>
+                          message.sender_id ===
+                            parseInt(selectedConversation.split('-')[0]) ||
+                          message.sender_id ===
+                            parseInt(selectedConversation.split('-')[1])
+                      )?.sender_id
+                }
               />
             )}
           </div>
