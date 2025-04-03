@@ -43,6 +43,15 @@ const Sidebar: React.FC<SidebarProps> = ({
     }
   };
 
+  const locations = [
+    '東京都',
+    '大阪府',
+    '京都府',
+    '愛知県',
+    '神奈川県',
+    '埼玉県',
+  ];
+
   const features = [
     '学生さん歓迎',
     '昼食おごります',
@@ -72,33 +81,17 @@ const Sidebar: React.FC<SidebarProps> = ({
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">場所</label>
         <div className="flex flex-col">
-          <label className="inline-flex items-center">
-            <input
-              type="checkbox"
-              className="form-checkbox"
-              checked={selectedLocation.includes('東京都')}
-              onChange={() => handleLocationChange('東京都')}
-            />
-            <span className="ml-2">東京都</span>
-          </label>
-          <label className="inline-flex items-center">
-            <input
-              type="checkbox"
-              className="form-checkbox"
-              checked={selectedLocation.includes('大阪府')}
-              onChange={() => handleLocationChange('大阪府')}
-            />
-            <span className="ml-2">大阪府</span>
-          </label>
-          <label className="inline-flex items-center">
-            <input
-              type="checkbox"
-              className="form-checkbox"
-              checked={selectedLocation.includes('福岡県')}
-              onChange={() => handleLocationChange('福岡県')}
-            />
-            <span className="ml-2">福岡県</span>
-          </label>
+          {locations.map((location) => (
+            <label key={location} className="inline-flex items-center">
+              <input
+                type="checkbox"
+                className="form-checkbox"
+                checked={selectedLocation.includes(location)}
+                onChange={() => handleLocationChange(location)}
+              />
+              <span className="ml-2">{location}</span>
+            </label>
+          ))}
         </div>
       </div>
       <div className="mb-4">
