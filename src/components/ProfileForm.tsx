@@ -79,11 +79,11 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ initialProfile, onSubmit }) =
       <div className="space-y-4 ">
         <div>
           <label className="block text-sm font-medium text-gray-700">自己紹介</label>
-          <textarea value={introduction} onChange={(e) => setIntroduction(e.target.value)} className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-2" rows={6} />
+          <textarea value={introduction} onChange={(e) => setIntroduction(e.target.value)} className="mt-1 block w-full pb-44 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-2" rows={6} />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">スキル</label>
-          <textarea value={skills} onChange={(e) => setSkills(e.target.value)} className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-2" rows={6} />
+          <textarea value={skills} onChange={(e) => setSkills(e.target.value)} className="mt-1 block w-full  pb-44 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-2" rows={6} />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">会社名</label>
