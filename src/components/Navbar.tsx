@@ -19,6 +19,10 @@ import {
 import { useRouter } from 'next/router';
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
+import {
+  LoginIcon, // ログインアイコン (v1)
+  UserAddIcon as UserAddSolidIcon, // 新規登録アイコン (v1)
+} from '@heroicons/react/solid'; // v1 のインポート
 
 interface User {
   id: number;
@@ -398,19 +402,21 @@ const Navbar = () => {
               <>
                 <Link
                   href="/users/login"
-                  className="text-indigo-600 hover:bg-gray-100 p-2 rounded-md transition-colors duration-300 w-full text-center"
+                  className="text-indigo-600 hover:bg-gray-100 p-2 rounded-md transition-colors duration-300 w-full flex items-center justify-center"
                 >
+                  <LoginIcon className="h-5 w-5 mr-2" />
                   ログイン
                 </Link>
                 <Link
                   href="/users/register"
-                  className="text-indigo-600 hover:bg-gray-100 p-2 rounded-md transition-colors duration-300 w-full text-center"
+                  className="text-indigo-600 hover:bg-gray-100 p-2 rounded-md transition-colors duration-300 w-full flex items-center justify-center"
                 >
+                  <UserAddSolidIcon className="h-5 w-5 mr-2" />
                   新規登録
                 </Link>
               </>
             )}
-            
+                        
           </div>
         </div>
       )}
