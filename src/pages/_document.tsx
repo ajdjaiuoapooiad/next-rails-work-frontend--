@@ -2,7 +2,7 @@ import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
   return (
-    <Html lang="en">
+    <Html lang="ja">
       <Head>
         <link rel="icon" href="/images/logo2.svg" />
         <title>インターンシップマッチングアプリ</title> {/* 共通のタイトルを設定 */}
