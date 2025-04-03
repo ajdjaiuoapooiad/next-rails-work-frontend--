@@ -65,28 +65,28 @@ const Sidebar: React.FC<SidebarProps> = ({
             <input
               type="checkbox"
               className="form-checkbox"
-              checked={selectedLocation.includes('東京')}
-              onChange={() => handleLocationChange('東京')}
+              checked={selectedLocation.includes('東京都')}
+              onChange={() => handleLocationChange('東京都')}
             />
-            <span className="ml-2">東京</span>
+            <span className="ml-2">東京都</span>
           </label>
           <label className="inline-flex items-center">
             <input
               type="checkbox"
               className="form-checkbox"
-              checked={selectedLocation.includes('大阪')}
-              onChange={() => handleLocationChange('大阪')}
+              checked={selectedLocation.includes('大阪府')}
+              onChange={() => handleLocationChange('大阪府')}
             />
-            <span className="ml-2">大阪</span>
+            <span className="ml-2">大阪府</span>
           </label>
           <label className="inline-flex items-center">
             <input
               type="checkbox"
               className="form-checkbox"
-              checked={selectedLocation.includes('福岡')}
-              onChange={() => handleLocationChange('福岡')}
+              checked={selectedLocation.includes('福岡県')}
+              onChange={() => handleLocationChange('福岡県')}
             />
-            <span className="ml-2">福岡</span>
+            <span className="ml-2">福岡県</span>
           </label>
         </div>
       </div>
