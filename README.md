@@ -8,14 +8,14 @@
 
 
 ## URL（API側のインフラにRenderを使用しているため初回Fetch時にしばらく時間かかります。）
-https://next-rails-work-frontend-page-router.vercel.app  
+https://next-rails-work-frontend-submit.vercel.app
 
 ## テスト用アカウント（ログイン用）
-学生  
-メール: aaa@a.com  
+企業(株式会社DeNa)  
+メール: aaa4@a.com  
 パスワード:  password  
-企業  
-メール: test@example.com  
+学生(学生yukito)  
+メール: aaa2@a.com  
 パスワード:  password  
 
 
