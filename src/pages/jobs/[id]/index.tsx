@@ -59,6 +59,14 @@ export default function JobDetail() {
   const handleInquiry = async () => {
     if (!job) return;
 
+    const token = localStorage.getItem('authToken');
+    const userId = localStorage.getItem('userId');
+    if (!token || !userId) {
+      // ログインしていない場合は登録ページに遷移
+      router.push('/users/register');
+      return;
+    }
+
     try {
       const token = localStorage.getItem('authToken');
       const userId = localStorage.getItem('userId');
