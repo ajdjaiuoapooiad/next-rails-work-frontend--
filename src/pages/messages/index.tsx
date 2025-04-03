@@ -225,8 +225,8 @@ export default function Messages() {
               ))}
               <div ref={messagesEndRef} />
             </div>
-             {/* 修正箇所 */}
-             {groupedMessages[selectedConversation]?.length > 0 ? (
+            {/* 修正箇所 */}
+            {groupedMessages[selectedConversation]?.length > 0 ? (
               groupedMessages[selectedConversation].find(
                 (message) => message.sender_id !== currentUser.id
               )?.sender_id !== currentUser.id && (

@@ -38,7 +38,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ onMessageSent, onError, recei
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!receiverId) {
-      setError('自分にはメッセージを送信できません。');
+      setError('相手を選択してください。');
       return;
     }
     if (receiverId === currentUserId) {
