@@ -7,6 +7,14 @@ import {
   XIcon,
   MailIcon,
   PlusCircleIcon,
+  UserIcon, // ユーザーアイコン
+  InformationCircleIcon, // 情報アイコン
+  ChatIcon, // チャットアイコン
+  ViewGridIcon, // グリッド表示アイコン
+  BriefcaseIcon, // 応募アイコン
+  HeartIcon, // いいねアイコン
+  ClipboardListIcon, // 求人リストアイコン
+  LogoutIcon, // ログアウトアイコン
 } from '@heroicons/react/solid';
 import { useRouter } from 'next/router';
 import Swal from 'sweetalert2';
@@ -184,61 +192,66 @@ const Navbar = () => {
                   </button>
                   {isDropdownOpen && (
                     <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-                      
                       <Link
                         href={`/users/${userId}/profile`}
-                        className="block px-4 py-3 text-sm  text-indigo-600 hover:bg-gray-100"
+                        className="block px-4 py-3 text-sm text-indigo-600 hover:bg-gray-100 flex items-center"
                         onClick={() => {
                           closeDropdown();
                         }}
                       >
+                        <UserIcon className="h-5 w-5 mr-2" />
                         プロフィール
                       </Link>
                       <Link
                         href={`/users/${userId}`}
-                        className="block px-4 py-3 text-sm  text-indigo-600 hover:bg-gray-100"
+                        className="block px-4 py-3 text-sm text-indigo-600 hover:bg-gray-100 flex items-center"
                         onClick={() => {
                           closeDropdown();
                         }}
                       >
+                        <InformationCircleIcon className="h-5 w-5 mr-2" />
                         ユーザー情報
                       </Link>
                       <Link
                         href={`/messages`}
-                        className="block px-4 py-3 text-sm  text-indigo-600 hover:bg-gray-100"
+                        className="block px-4 py-3 text-sm text-indigo-600 hover:bg-gray-100 flex items-center"
                         onClick={() => {
                           closeDropdown();
                         }}
                       >
+                        <ChatIcon className="h-5 w-5 mr-2" />
                         メッセージ
                       </Link>
                       <Link
                         href={'/users'}
-                        className="block px-4 py-3 text-sm  text-indigo-600 hover:bg-gray-100"
+                        className="block px-4 py-3 text-sm text-indigo-600 hover:bg-gray-100 flex items-center"
                         onClick={() => {
                           closeDropdown();
                         }}
                       >
+                        <ViewGridIcon className="h-5 w-5 mr-2" />
                         ユーザー一覧
                       </Link>
                       {userType === 'student' && (
                         <>
                           <Link
                             href={`/users/${userId}/profile`}
-                            className="block px-4 py-3 text-sm  text-indigo-600 hover:bg-gray-100"
+                            className="block px-4 py-3 text-sm text-indigo-600 hover:bg-gray-100 flex items-center"
                             onClick={() => {
                               closeDropdown();
                             }}
                           >
+                            <BriefcaseIcon className="h-5 w-5 mr-2" />
                             応募した企業
                           </Link>
                           <Link
                             href={`/users/${userId}/profile`}
-                            className="block px-4 py-3 text-sm  text-indigo-600 hover:bg-gray-100"
+                            className="block px-4 py-3 text-sm text-indigo-600 hover:bg-gray-100 flex items-center"
                             onClick={() => {
                               closeDropdown();
                             }}
                           >
+                            <HeartIcon className="h-5 w-5 mr-2" />
                             いいねした求人
                           </Link>
                         </>
@@ -246,18 +259,20 @@ const Navbar = () => {
                       {userType === 'company' && (
                         <Link
                           href={'/users/jobs'}
-                          className="block px-4 py-3 text-sm  text-indigo-600 hover:bg-gray-100"
+                          className="block px-4 py-3 text-sm text-indigo-600 hover:bg-gray-100 flex items-center"
                           onClick={() => {
                             closeDropdown();
                           }}
                         >
+                          <ClipboardListIcon className="h-5 w-5 mr-2" />
                           募集した求人
                         </Link>
                       )}
                       <button
                         onClick={handleLogout}
-                        className="block w-full text-left px-4 py-3 text-sm text-red-700 hover:bg-gray-100"
+                        className="block w-full text-left px-4 py-3 text-sm text-red-700 hover:bg-gray-100 flex items-center"
                       >
+                        <LogoutIcon className="h-5 w-5 mr-2" />
                         ログアウト
                       </button>
                     </div>
@@ -300,98 +315,83 @@ const Navbar = () => {
           className="md:hidden bg-white shadow-md rounded-md p-4 mt-2"
         >
           <div className="flex flex-col items-center space-y-4">
-            <Link
-              href="/jobs"
-              className=" text-indigo-600 hover:bg-gray-100 p-2 rounded-md transition-colors duration-300 w-full text-center"
-            >
-              求人一覧
-            </Link>
+ 
             {isLoggedIn && (
               <>
                 <Link
                   href={`/users/${userId}/profile`}
-                  className=" text-indigo-600 hover:bg-gray-100 p-2 rounded-md transition-colors duration-300 w-full text-center"
+                  className="text-indigo-600 hover:bg-gray-100 p-2 rounded-md transition-colors duration-300 w-full flex items-center justify-center" // justify-center を追加
                 >
+                  <UserIcon className="h-5 w-5 mr-2" />
                   プロフィール
                 </Link>
                 <Link
                   href={`/users/${userId}`}
-                  className=" text-indigo-600 hover:bg-gray-100 p-2 rounded-md transition-colors duration-300 w-full text-center"
+                  className="text-indigo-600 hover:bg-gray-100 p-2 rounded-md transition-colors duration-300 w-full flex items-center justify-center" // justify-center を追加
                 >
+                  <InformationCircleIcon className="h-5 w-5 mr-2" />
                   ユーザー情報
                 </Link>
                 <Link
                   href={`/messages`}
-                  className=" text-indigo-600 hover:bg-gray-100 p-2 rounded-md transition-colors duration-300 w-full text-center flex items-center justify-center"
+                  className="text-indigo-600 hover:bg-gray-100 p-2 rounded-md transition-colors duration-300 w-full flex items-center justify-center" // justify-center を追加
                 >
-                  <MailIcon className="h-5 w-5 mr-1" />
+                  <ChatIcon className="h-5 w-5 mr-2" />
                   メッセージ
                 </Link>
                 <Link
                   href={'/users'}
-                  className="block px-4 py-3 text-sm  text-indigo-600 hover:bg-gray-100"
+                  className="block px-4 py-3 text-sm text-indigo-600 hover:bg-gray-100 flex items-center justify-center" // justify-center を追加
                   onClick={() => {
                     closeDropdown();
                   }}
                 >
+                  <ViewGridIcon className="h-5 w-5 mr-2" />
                   ユーザー一覧
                 </Link>
                 {userType === 'student' && (
                   <>
                     <Link
                       href={`/users/${userId}/profile`}
-                      className=" text-indigo-600 hover:bg-gray-100 p-2 rounded-md transition-colors duration-300 w-full text-center"
+                      className="text-indigo-600 hover:bg-gray-100 p-2 rounded-md transition-colors duration-300 w-full flex items-center justify-center" // justify-center を追加
                     >
+                      <BriefcaseIcon className="h-5 w-5 mr-2" />
                       応募した企業
                     </Link>
                     <Link
                       href={`/users/${userId}/profile`}
-                      className=" text-indigo-600 hover:bg-gray-100 p-2 rounded-md transition-colors duration-300 w-full text-center"
+                      className="text-indigo-600 hover:bg-gray-100 p-2 rounded-md transition-colors duration-300 w-full flex items-center justify-center" // justify-center を追加
                     >
+                      <HeartIcon className="h-5 w-5 mr-2" />
                       いいねした求人
                     </Link>
                   </>
                 )}
                 {userType === 'company' && (
                   <>
-                  <Link
-                    href="/jobs/create"
-                    className=" text-indigo-600 hover:bg-gray-100 p-2 rounded-md transition-colors duration-300 w-full text-center flex items-center justify-center"
-                  >
-                    <PlusCircleIcon className="h-5 w-5 mr-1" />
-                    求人作成
-                  </Link>
-                  <Link
-                    href="/users/jobs"
-                    className=" text-indigo-600 hover:bg-gray-100 p-2 rounded-md transition-colors duration-300 w-full text-center"
-                  >
-                    募集した求人
-                  </Link>
+                    <Link
+                      href="/jobs/create"
+                      className="text-indigo-600 hover:bg-gray-100 p-2 rounded-md transition-colors duration-300 w-full flex items-center justify-center" // justify-center を追加
+                    >
+                      <PlusCircleIcon className="h-5 w-5 mr-2" />
+                      求人作成
+                    </Link>
+                    <Link
+                      href="/users/jobs"
+                      className="text-indigo-600 hover:bg-gray-100 p-2 rounded-md transition-colors duration-300 w-full flex items-center justify-center" // justify-center を追加
+                    >
+                      <ClipboardListIcon className="h-5 w-5 mr-2" />
+                      募集した求人
+                    </Link>
                   </>
                 )}
-                
                 <button
                   onClick={handleLogout}
-                  className="text-red-700 hover:bg-gray-100 p-2 rounded-md transition-colors duration-300 w-full"
+                  className="text-red-700 hover:bg-gray-100 p-2 rounded-md transition-colors duration-300 w-full flex items-center justify-center" // justify-center を追加
                 >
+                  <LogoutIcon className="h-5 w-5 mr-2" />
                   ログアウト
                 </button>
-              </>
-            )}
-            {!isLoggedIn && (
-              <>
-                <Link
-                  href="/users/login"
-                  className="text-indigo-600 hover:bg-gray-100 p-2 rounded-md transition-colors duration-300 w-full text-center"
-                >
-                  ログイン
-                </Link>
-                <Link
-                  href="/users/register"
-                  className="text-indigo-600 hover:bg-gray-100 p-2 rounded-md transition-colors duration-300 w-full text-center"
-                >
-                  新規登録
-                </Link>
               </>
             )}
           </div>
