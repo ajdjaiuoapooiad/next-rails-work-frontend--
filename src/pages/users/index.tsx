@@ -1,11 +1,12 @@
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
+import Link from 'next/link'; // Link コンポーネントをインポート
 
 interface User {
   id: number;
   name: string;
   email: string;
-  user_type: string; // user_type を string 型に変更
+  user_type: string;
   icon?: string;
 }
 
@@ -72,23 +73,24 @@ export default function UserList() {
             className="border p-4 rounded-md shadow-sm flex items-center"
             style={{ minHeight: '100px' }}
           >
-            <img
-              src={user.icon || defaultIcon}
-              alt={`${user.name}のアイコン`}
-              className="w-14 h-14 rounded-full mr-4"
-            />
-            <div className="grid grid-cols-3 gap-4">
-              <div>
-                <strong>名前:</strong> {user.name}
+            <Link href={`/users/${user.id}/profile`} className="flex items-center w-full"> {/* Link コンポーネントでラップ */}
+              <img
+                src={user.icon || defaultIcon}
+                alt={`${user.name}のアイコン`}
+                className="w-14 h-14 rounded-full mr-4"
+              />
+              <div className="grid grid-cols-3 gap-4 w-full">
+                <div>
+                  <strong>名前:</strong> {user.name}
+                </div>
+                <div>
+                  <strong>メールアドレス:</strong> {user.email}
+                </div>
+                <div>
+                  <strong>ユーザータイプ:</strong> {user.user_type === 'student' ? '学生' : user.user_type === 'company' ? '企業' : '不明'}
+                </div>
               </div>
-              <div>
-                <strong>メールアドレス:</strong> {user.email}
-              </div>
-              <div>
-                {/* ユーザータイプの表示を修正 */}
-                <strong>ユーザータイプ:</strong> {user.user_type === 'student' ? '学生' : user.user_type === 'company' ? '企業' : '不明'}
-              </div>
-            </div>
+            </Link>
           </li>
         ))}
       </ul>

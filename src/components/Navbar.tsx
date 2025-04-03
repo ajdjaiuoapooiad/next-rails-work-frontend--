@@ -184,11 +184,7 @@ const Navbar = () => {
                   </button>
                   {isDropdownOpen && (
                     <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-                      <div className="flex justify-end p-2">
-                        <button onClick={closeDropdown}>
-                          <XIcon className="h-5 w-5 text-gray-500" />
-                        </button>
-                      </div>
+                      
                       <Link
                         href={`/users/${userId}/profile`}
                         className="block px-4 py-3 text-sm  text-indigo-600 hover:bg-gray-100"
@@ -215,6 +211,15 @@ const Navbar = () => {
                         }}
                       >
                         メッセージ
+                      </Link>
+                      <Link
+                        href={'/users'}
+                        className="block px-4 py-3 text-sm  text-indigo-600 hover:bg-gray-100"
+                        onClick={() => {
+                          closeDropdown();
+                        }}
+                      >
+                        ユーザー一覧
                       </Link>
                       {userType === 'student' && (
                         <>
@@ -322,6 +327,15 @@ const Navbar = () => {
                   <MailIcon className="h-5 w-5 mr-1" />
                   メッセージ
                 </Link>
+                <Link
+                  href={'/users'}
+                  className="block px-4 py-3 text-sm  text-indigo-600 hover:bg-gray-100"
+                  onClick={() => {
+                    closeDropdown();
+                  }}
+                >
+                  ユーザー一覧
+                </Link>
                 {userType === 'student' && (
                   <>
                     <Link
@@ -355,6 +369,7 @@ const Navbar = () => {
                   </Link>
                   </>
                 )}
+                
                 <button
                   onClick={handleLogout}
                   className="text-red-700 hover:bg-gray-100 p-2 rounded-md transition-colors duration-300 w-full"
